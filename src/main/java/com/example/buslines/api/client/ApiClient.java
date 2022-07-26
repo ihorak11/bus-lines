@@ -1,12 +1,14 @@
 package com.example.buslines.api.client;
 
 import com.example.buslines.config.ApplicationProperties;
+import lombok.Getter;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@Getter
 public class ApiClient {
 
     private ApplicationProperties appProps;
