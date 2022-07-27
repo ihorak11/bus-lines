@@ -16,6 +16,6 @@ public class ApplicationProperties {
     @Value("${api.sl.api-key}")
     private String slApiKey;
 
-    @Value("api.sl.path")
+    @Value("${api.sl.path}")
     private String slApiPath;
 }
