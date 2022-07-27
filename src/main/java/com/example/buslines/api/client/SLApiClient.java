@@ -20,7 +20,7 @@ public class SLApiClient extends ApiClient {
     public static final String QUERY_PARAM_NAME_KEY = "key";
 
     public SLApiClient(WebClient.Builder clientBuilder, ApplicationProperties appProps) { //This constructor is implicitly Autowired
-        super(clientBuilder.baseUrl(appProps.getApiSlUrl()).build(), appProps);
+        super( appProps, clientBuilder.baseUrl(appProps.getApiSlUrl()).build());
     }
 
     public JourneyResponse getSlBusLines() {

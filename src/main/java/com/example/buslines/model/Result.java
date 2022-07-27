@@ -1,7 +1,9 @@
 package com.example.buslines.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
+@Getter
 public class Result { //TODO adjust types accordingly
     @JsonProperty("LineNumber")
     public String lineNumber;
