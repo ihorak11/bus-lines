@@ -1,6 +1,7 @@
 package com.example.buslines.api.client;
 
 import com.example.buslines.config.ApplicationProperties;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -8,16 +9,13 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@AllArgsConstructor
 @Getter
 public class ApiClient {
 
     private ApplicationProperties appProps;
     private WebClient webClient;
 
-    public ApiClient(WebClient webClient, ApplicationProperties appProps) {
-        this.appProps = appProps;
-        this.webClient = webClient;
-    }
 
     public <K> K apiRequest(HttpMethod method, String path, Class<K> responseClass, MultiValueMap<String, String> queryParams, Object... pathParams) {
         return webClient.method(method)
