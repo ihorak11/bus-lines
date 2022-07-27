@@ -1,6 +1,7 @@
 package com.example.buslines.api.client;
 
 import com.example.buslines.config.ApplicationProperties;
+import com.example.buslines.model.JourneyResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,12 @@ public class SLApiClient extends ApiClient {
         super(clientBuilder.baseUrl(appProps.getApiSlUrl()).build(), appProps);
     }
 
-    public String getSlBusLines() { //TODO fix return type when model is ready
+    public JourneyResponse getSlBusLines() {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add(QUERY_PARAM_NAME_MODEL, RESPONSE_MODEL_JOURNEY);
         queryParams.add(QUERY_PARAM_NAME_DTMC, DEFAULT_TRANSPORT_MODE_CODE_BUS);
         queryParams.add(QUERY_PARAM_NAME_KEY, getAppProps().getSlApiKey());
 
-        return apiRequest(HttpMethod.GET, getAppProps().getSlApiPath(), String.class, queryParams); //TODO fix response class when model is ready
+        return apiRequest(HttpMethod.GET, getAppProps().getSlApiPath(), JourneyResponse.class, queryParams);
     }
 }
