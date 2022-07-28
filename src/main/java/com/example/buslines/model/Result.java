@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
+//TODO change names of response classes to something more descriptive
 public class Result { //TODO adjust types accordingly
     @JsonProperty("LineNumber")
     public String lineNumber;

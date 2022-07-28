@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,12 +25,9 @@ public class BusLineService {
     public void getTop10BusLines() {
         JourneyResponse journeyResponse = slApiClient.getSlBusLines();
         ArrayList<Result> stopPointList = journeyResponse.getResponseData().getResult();
-        //TODO create a busline-stopId list map
         Map<String, Set<String>> busLineToStopIdMap = extractBusLineStopIdMap(stopPointList);
-        Map<String, Long> topTenLongestBusLinesMap = getTopTenLongestBusLinesMap(stopPointList);
 
-        //TODO extract the relevant busLine stops and provide in method createTopBusLinesScoreboardObject
-        createTopBusLinesScoreboardObject(topTenLongestBusLinesMap);
+        createTopBusLinesScoreboardObject(busLineToStopIdMap);
     }
 
     private Map<String, Set<String>> extractBusLineStopIdMap(ArrayList<Result> stopPointList) {
@@ -42,15 +39,16 @@ public class BusLineService {
                 );
     }
 
-    private void createTopBusLinesScoreboardObject(Map<String, Long> topBusLinesMap) {
-        Long noOfStops;
-        LineDirectionPair ldPair;
-        for (String key : topBusLinesMap.keySet()) {
-            noOfStops = topBusLinesMap.get(key);
-            ldPair = getLineDirectionPair(key);
-
-        }
-
+    private void createTopBusLinesScoreboardObject(Map<String, Set<String>> busLineToStopIdMap) { //TODO change return type
+        //TODO sort and take top 10 bus lines
+        Map<String, Set<String>> topTenBusLines = busLineToStopIdMap.entrySet().stream()
+                .sorted(Comparator.comparing(o -> o.getValue().size(), Comparator.reverseOrder()))
+                .limit(10)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)); //TODO fix sorting
+        //TODO call API for fetching line names
+        //TODO iterate top 10 bus lines and find names for bus stops
+        //TODO create BusLine object and put in scoreboard
+        //TODO pay attention that it is ordered in the response object
     }
 
     private LineDirectionPair getLineDirectionPair(String lineDirectionKey) {
@@ -62,15 +60,13 @@ public class BusLineService {
                 .build();
     }
 
-    private Map<String, Long> getTopTenLongestBusLinesMap(ArrayList<Result> stopPointList) { //TODO see if the steps in this method can be done in a oneliner
-        Map<String, Long> maxLineStopList = stopPointList.stream().collect(Collectors.groupingBy(result -> result.lineNumber + DELIMITER + result.directionCode, Collectors.counting()));
+    private Map<String, Integer> getTopTenLongestBusLinesMap(Map<String, Set<String>> stopPointList) { //TODO see if the steps in this method can be done in a oneliner
+        Map<String, Integer> busLineToCountedStopsMap = stopPointList.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().size()));
 
-        List<Map.Entry<String, Long>> sortedEntries = new ArrayList<>(maxLineStopList.entrySet());
-
-        return sortedEntries.stream()
-                .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue())).limit(10)
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        Map.Entry::getValue));
-
+        return busLineToCountedStopsMap.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .limit(10)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }
