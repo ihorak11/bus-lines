@@ -2,8 +2,9 @@ package com.example.buslines.service;
 
 import com.example.buslines.api.client.SLApiClient;
 import com.example.buslines.model.JourneyLineStopPoint;
-import com.example.buslines.model.JourneyResponse;
+import com.example.buslines.model.JourneyPatternStopResponse;
 import com.example.buslines.model.LineDirectionPair;
+import com.example.buslines.model.StopPointDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,8 @@ public class BusLineService {
     private final String DELIMITER = ";";
 
     public void getTop10BusLines() {
-        JourneyResponse journeyResponse = slApiClient.getSlBusLines();
-        ArrayList<JourneyLineStopPoint> stopPointList = journeyResponse.getResponseData().getJourneyLineStopPointList();
+        JourneyPatternStopResponse journeyResponse = slApiClient.getSlBusLines();
+        ArrayList<JourneyLineStopPoint> stopPointList = journeyResponse.getJourneyResponseData().getJourneyLineStopPointList();
         Map<String, Set<String>> busLineToStopIdMap = extractBusLineStopIdMap(stopPointList);
 
         createTopBusLinesScoreboardObject(busLineToStopIdMap);
@@ -46,6 +47,7 @@ public class BusLineService {
                 .limit(10)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)); //TODO fix sorting
         //TODO call API for fetching line names
+        ArrayList<StopPointDetails> stopPointDetailsList = slApiClient.getStopPointDetails().getResponseData().getStopPointDetailsList();
         //TODO iterate top 10 bus lines and find names for bus stops
         //TODO create BusLine object and put in scoreboard
         //TODO pay attention that it is ordered in the response object

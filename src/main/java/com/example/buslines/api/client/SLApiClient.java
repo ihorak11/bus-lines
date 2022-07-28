@@ -1,8 +1,9 @@
 package com.example.buslines.api.client;
 
 import com.example.buslines.config.ApplicationProperties;
-import com.example.buslines.model.JourneyResponse;
+import com.example.buslines.model.JourneyPatternStopResponse;
 import com.example.buslines.model.StopPointDetails;
+import com.example.buslines.model.StopPointResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -25,22 +26,22 @@ public class SLApiClient extends ApiClient {
         super( appProps, clientBuilder.baseUrl(appProps.getApiSlUrl()).build());
     }
 
-    public JourneyResponse getSlBusLines() {
+    public JourneyPatternStopResponse getSlBusLines() {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add(QUERY_PARAM_NAME_MODEL, RESPONSE_MODEL_JOURNEY);
         queryParams.add(QUERY_PARAM_NAME_DTMC, DEFAULT_TRANSPORT_MODE_CODE_BUS);
         queryParams.add(QUERY_PARAM_NAME_KEY, getAppProps().getSlApiKey());
 
-        return callSLStopsAndLinesApi(getAppProps().getSlApiPath(), JourneyResponse.class, queryParams);
+        return callSLStopsAndLinesApi(getAppProps().getSlApiPath(), JourneyPatternStopResponse.class, queryParams);
     }
 
-    public StopPointDetails getStopPointDetails() {
+    public StopPointResponse getStopPointDetails() {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add(QUERY_PARAM_NAME_MODEL, RESPONSE_MODEL_STOP);
         queryParams.add(QUERY_PARAM_NAME_DTMC, DEFAULT_TRANSPORT_MODE_CODE_BUS);
         queryParams.add(QUERY_PARAM_NAME_KEY, getAppProps().getSlApiKey());
 
-        return callSLStopsAndLinesApi(getAppProps().getSlApiPath(), StopPointDetails.class, queryParams);
+        return callSLStopsAndLinesApi(getAppProps().getSlApiPath(), StopPointResponse.class, queryParams);
     }
         private <K> K callSLStopsAndLinesApi(String path, Class<K> responseClass, MultiValueMap<String, String> queryParams) {
             return apiRequest(HttpMethod.GET, path, responseClass, queryParams);
