@@ -12,5 +12,5 @@ public class ResponseData { //TODO adjust types accordingly
     @JsonProperty("Type")
     public String type;
     @JsonProperty("Result")
-    public ArrayList<Result> result;
+    public ArrayList<JourneyLineStopPoint> journeyLineStopPointList;
 }

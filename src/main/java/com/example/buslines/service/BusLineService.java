@@ -1,9 +1,9 @@
 package com.example.buslines.service;
 
 import com.example.buslines.api.client.SLApiClient;
+import com.example.buslines.model.JourneyLineStopPoint;
 import com.example.buslines.model.JourneyResponse;
 import com.example.buslines.model.LineDirectionPair;
-import com.example.buslines.model.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +24,18 @@ public class BusLineService {
 
     public void getTop10BusLines() {
         JourneyResponse journeyResponse = slApiClient.getSlBusLines();
-        ArrayList<Result> stopPointList = journeyResponse.getResponseData().getResult();
+        ArrayList<JourneyLineStopPoint> stopPointList = journeyResponse.getResponseData().getJourneyLineStopPointList();
         Map<String, Set<String>> busLineToStopIdMap = extractBusLineStopIdMap(stopPointList);
 
         createTopBusLinesScoreboardObject(busLineToStopIdMap);
     }
 
-    private Map<String, Set<String>> extractBusLineStopIdMap(ArrayList<Result> stopPointList) {
+    private Map<String, Set<String>> extractBusLineStopIdMap(ArrayList<JourneyLineStopPoint> journeyLineStopPointList) {
         //TODO replace repeated usages of unique ID creation
-        return stopPointList.stream()
+        return journeyLineStopPointList.stream()
                 .collect(
                         Collectors.groupingBy(stopPoint -> stopPoint.getLineNumber() + DELIMITER + stopPoint.getDirectionCode(),
-                                Collectors.mapping(Result::getJourneyPatternPointNumber, Collectors.toSet()))
+                                Collectors.mapping(JourneyLineStopPoint::getJourneyPatternPointNumber, Collectors.toSet()))
                 );
     }
 
