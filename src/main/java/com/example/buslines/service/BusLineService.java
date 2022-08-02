@@ -66,7 +66,7 @@ public class BusLineService {
             busLines.add(busLine);
         }
 
-        //TODO create BusLine object and put in scoreboard
+        //TODO create BusLine object and put in scoreboard.js
         //TODO pay attention that it is ordered in the response object
         return TopBusLinesScoreboard.builder()
                 .busLines(busLines)
@@ -75,12 +75,10 @@ public class BusLineService {
 
     private ArrayList<String> getStopNamesListForBusLine(ArrayList<StopPointDetails> stopPointDetailsList, Set<String> stopPointIdSet) { //TODO change name
 
-        ArrayList<String> stopNames = stopPointDetailsList.stream()
+        return stopPointDetailsList.stream()
                 .filter(stopPointDetails -> stopPointIdSet.contains(stopPointDetails.getStopPointNumber()))
                 .map(StopPointDetails::getStopPointName)
                 .collect(Collectors.toCollection(ArrayList::new));
-
-        return stopNames;
     }
 
     private LineDirectionPair getLineDirectionPair(String lineDirectionKey) {
