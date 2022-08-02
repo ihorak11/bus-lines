@@ -1,12 +1,12 @@
 function createScoreboard(scoreboard) {
     console.log(scoreboard);
 
-    for (let i of scoreboard.busLines) {
+    for (let busLine of scoreboard.busLines) {
         // create busLine button
-        console.log(i.designation);
+        console.log(busLine.designation);
         const busLineButton = document.createElement('button');
         busLineButton.classList.add('collapsible');
-        busLineButton.textContent = 'Line: ' + i.designation + ' Direction: ' + i.direction;
+        busLineButton.textContent = 'Line: ' + busLine.designation + ' Direction: ' + busLine.direction;
 
 
         // add busLine button to parent div
@@ -19,11 +19,14 @@ function createScoreboard(scoreboard) {
 
 
         // populate stop list
-        i.stopNames.forEach(({stopName}) => {
+        for (let stopName of busLine.stopNames) {
+            console.log("StopName: " + stopName);
+
             const stopItem = document.createElement('p');
             stopItem.textContent = stopName;
             stopList.appendChild(stopItem);
-        })
+        }
+
 
         document.getElementById('bus_lines').appendChild(stopList);
     }
