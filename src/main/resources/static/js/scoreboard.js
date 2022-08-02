@@ -1,33 +1,39 @@
 function createScoreboard(scoreboard) {
-    console.log(scoreboard);
+    //get main accordion div
+    const accordionContainer = document.getElementById('accordion-container');
 
     for (let busLine of scoreboard.busLines) {
-        // create busLine button
-        console.log(busLine.designation);
+        const accordion = document.createElement("div");
+        accordion.classList.add('ac');
+        accordionContainer.appendChild(accordion);
+
+        const busLineHeader = document.createElement("h2");
+        busLineHeader.classList.add('ac-header');
+
         const busLineButton = document.createElement('button');
-        busLineButton.classList.add('collapsible');
+        busLineButton.type = 'button';
+        busLineButton.classList.add('ac-trigger');
         busLineButton.textContent = 'Line: ' + busLine.designation + ' Direction: ' + busLine.direction;
 
+        accordion.appendChild(busLineHeader);
+        busLineHeader.appendChild(busLineButton);
 
-        // add busLine button to parent div
-        document.getElementById('bus_lines').appendChild(busLineButton);
+        // create panel div
+        const stopListPanel = document.createElement('div');
+        stopListPanel.classList.add('ac-panel');
 
-
-        // create div for stop list
-        const stopList = document.createElement('div');
-        stopList.classList.add('content');
-
-
-        // populate stop list
+        // populate stop names
         for (let stopName of busLine.stopNames) {
-            console.log("StopName: " + stopName);
 
             const stopItem = document.createElement('p');
+
+            stopItem.classList.add('ac-text');
             stopItem.textContent = stopName;
-            stopList.appendChild(stopItem);
+
+            stopListPanel.appendChild(stopItem);
         }
 
-
-        document.getElementById('bus_lines').appendChild(stopList);
+        //add stop panel to accordion
+        accordion.appendChild(stopListPanel)
     }
 }
