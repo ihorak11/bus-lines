@@ -66,7 +66,8 @@ public class BusLineService {
             busLines.add(busLine);
         }
 
-        //TODO create BusLine object and put in scoreboard.js
+        busLines.sort(Comparator.comparing(o -> o.getStopNames().size(), Comparator.reverseOrder()));
+
         //TODO pay attention that it is ordered in the response object
         return TopBusLinesScoreboard.builder()
                 .busLines(busLines)
