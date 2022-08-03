@@ -11,5 +11,4 @@ public class BusLine {
     private String designation;
     private String direction;
     private ArrayList<String> stopNames;
-
 }

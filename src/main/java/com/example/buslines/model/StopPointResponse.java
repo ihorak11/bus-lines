@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
-public class StopPointResponse { //TODO adjust types accordingly
+public class StopPointResponse {
     @JsonProperty("StatusCode")
     public int statusCode;
     @JsonProperty("Message")

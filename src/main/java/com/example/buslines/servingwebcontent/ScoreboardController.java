@@ -14,11 +14,10 @@ public class ScoreboardController {
     private BusLineService busLineService;
 
     @GetMapping("/scoreboard")
-    public String scoreboard(Model model) {
+    public String getScoreboard(Model model) {
         TopBusLinesScoreboard topBusLines = busLineService.getTop10BusLines();
         model.addAttribute("scoreboard", topBusLines);
 
         return "scoreboard";
     }
-
 }

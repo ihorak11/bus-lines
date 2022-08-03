@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
-//TODO change names of response classes to something more descriptive
-public class JourneyLineStopPoint { //TODO adjust types accordingly
+public class JourneyLineStopPoint {
     @JsonProperty("LineNumber")
     public String lineNumber;
     @JsonProperty("DirectionCode")

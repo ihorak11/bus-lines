@@ -8,5 +8,4 @@ import lombok.Getter;
 public class LineDirectionPair {
     private String lineNumber;
     private String direction;
-
 }

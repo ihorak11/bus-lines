@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @Service
 public class BusLineService {
     //TODO put helpful comments everywhere once code is done
-    //TODO put statement stating that this webapp contains info provided by Trafiklab API (part of the terms and conditions)
     private SLApiClient slApiClient;
 
     private final String DELIMITER = ";";
@@ -34,7 +33,6 @@ public class BusLineService {
     }
 
     private Map<String, Set<String>> extractBusLineStopIdMap(ArrayList<JourneyLineStopPoint> journeyLineStopPointList) {
-        //TODO replace repeated usages of unique ID creation
         return journeyLineStopPointList.stream()
                 .collect(
                         Collectors.groupingBy(stopPoint -> stopPoint.getLineNumber() + DELIMITER + stopPoint.getDirectionCode(),
@@ -42,15 +40,12 @@ public class BusLineService {
                 );
     }
 
-    private TopBusLinesScoreboard createTopBusLinesScoreboardObject(Map<String, Set<String>> busLineToStopIdMap) { //TODO change return type
-        //TODO sort and take top 10 bus lines
+    private TopBusLinesScoreboard createTopBusLinesScoreboardObject(Map<String, Set<String>> busLineToStopIdMap) {
         Map<String, Set<String>> topTenBusLines = busLineToStopIdMap.entrySet().stream()
                 .sorted(Comparator.comparing(o -> o.getValue().size(), Comparator.reverseOrder()))
                 .limit(10)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)); //TODO fix sorting
-        //TODO call API for fetching line names
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         ArrayList<StopPointDetails> stopPointDetailsList = slApiClient.getStopPointDetails().getResponseData().getStopPointDetailsList();
-        //TODO iterate top 10 bus lines and find names for bus stops
         LineDirectionPair lineDirectionPair;
         BusLine busLine;
         ArrayList<BusLine> busLines = new ArrayList<>();
@@ -60,7 +55,7 @@ public class BusLineService {
             busLine = BusLine.builder()
                     .designation(lineDirectionPair.getLineNumber())
                     .direction(lineDirectionPair.getDirection())
-                    .stopNames(getStopNamesListForBusLine(stopPointDetailsList, topTenBusLines.get(key)))
+                    .stopNames(getStopNamesFromStopIds(stopPointDetailsList, topTenBusLines.get(key)))
                     .build();
 
             busLines.add(busLine);
@@ -68,13 +63,12 @@ public class BusLineService {
 
         busLines.sort(Comparator.comparing(o -> o.getStopNames().size(), Comparator.reverseOrder()));
 
-        //TODO pay attention that it is ordered in the response object
         return TopBusLinesScoreboard.builder()
                 .busLines(busLines)
                 .build();
     }
 
-    private ArrayList<String> getStopNamesListForBusLine(ArrayList<StopPointDetails> stopPointDetailsList, Set<String> stopPointIdSet) { //TODO change name
+    private ArrayList<String> getStopNamesFromStopIds(ArrayList<StopPointDetails> stopPointDetailsList, Set<String> stopPointIdSet) {
 
         return stopPointDetailsList.stream()
                 .filter(stopPointDetails -> stopPointIdSet.contains(stopPointDetails.getStopPointNumber()))
@@ -89,15 +83,5 @@ public class BusLineService {
                 .lineNumber(split[0])
                 .direction(split[1])
                 .build();
-    }
-
-    private Map<String, Integer> getTopTenLongestBusLinesMap(Map<String, Set<String>> stopPointList) { //TODO see if the steps in this method can be done in a oneliner
-        Map<String, Integer> busLineToCountedStopsMap = stopPointList.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().size()));
-
-        return busLineToCountedStopsMap.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .limit(10)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

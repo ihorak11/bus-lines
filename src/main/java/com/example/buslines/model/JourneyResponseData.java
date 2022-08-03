@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 
 @Getter
-public class JourneyResponseData { //TODO adjust types accordingly
+public class JourneyResponseData {
     @JsonProperty("Version")
     public String version;
     @JsonProperty("Type")

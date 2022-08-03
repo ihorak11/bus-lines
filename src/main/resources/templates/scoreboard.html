@@ -19,6 +19,9 @@
         </div>
     </div>-->
 </div>
+<div>
+    <p style="text-align:center;">This service is based on information retrieved from <a href="https://www.trafiklab.se/">Trafiklab.se</a></p>
+</div>
 <script th:inline="javascript">
     const scoreboard = /*[[${scoreboard}]]*/ {};
     createScoreboard(scoreboard);
@@ -26,6 +29,5 @@
 <script>
     new Accordion('.accordion-container');
 </script>
-<!--TODO add the disclaimer stating the TrafikLab API usage-->
 </body>
 </html>
