@@ -32,6 +32,10 @@ public class BusLineService {
         return createTopBusLinesScoreboardObject(busLineToStopIdMap);
     }
 
+    /**
+     * @param journeyLineStopPointList List of stop point details together with details about which bus stop they belong to
+     * @return Map where the key is the bus identification string in format "lineNumber;directionCode" and the values are a set of unique stop IDs
+     */
     private Map<String, Set<String>> extractBusLineStopIdMap(ArrayList<JourneyLineStopPoint> journeyLineStopPointList) {
         return journeyLineStopPointList.stream()
                 .collect(
@@ -40,6 +44,10 @@ public class BusLineService {
                 );
     }
 
+    /**
+     * @param busLineToStopIdMap Map where the key is the bus identification string in format "lineNumber;directionCode" and the values are a set of unique stop IDs
+     * @return Fully prepared object that will be consumed by frontend to construct the bus line scoreboard
+     */
     private TopBusLinesScoreboard createTopBusLinesScoreboardObject(Map<String, Set<String>> busLineToStopIdMap) {
         Map<String, Set<String>> topTenBusLines = busLineToStopIdMap.entrySet().stream()
                 .sorted(Comparator.comparing(o -> o.getValue().size(), Comparator.reverseOrder()))
@@ -68,6 +76,11 @@ public class BusLineService {
                 .build();
     }
 
+    /**
+     * @param stopPointDetailsList List of objects containing bus stop details
+     * @param stopPointIdSet Set of stop IDs for a specific bus line
+     * @return List of bus stop names
+     */
     private ArrayList<String> getStopNamesFromStopIds(ArrayList<StopPointDetails> stopPointDetailsList, Set<String> stopPointIdSet) {
 
         return stopPointDetailsList.stream()
