@@ -1,4 +1,4 @@
-package com.example.buslines.model;
+package com.example.buslines.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -6,11 +6,11 @@ import lombok.Getter;
 import java.util.ArrayList;
 
 @Getter
-public class StopPointResponseData {
+public class JourneyResponseData {
     @JsonProperty("Version")
     public String version;
     @JsonProperty("Type")
     public String type;
     @JsonProperty("Result")
-    public ArrayList<StopPointDetails> stopPointDetailsList;
+    public ArrayList<JourneyLineStopPoint> journeyLineStopPointList;
 }

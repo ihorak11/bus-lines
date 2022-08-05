@@ -1,4 +1,4 @@
-package com.example.buslines.servingwebcontent;
+package com.example.buslines.controller;
 
 import com.example.buslines.model.TopBusLinesScoreboard;
 import com.example.buslines.service.BusLineService;

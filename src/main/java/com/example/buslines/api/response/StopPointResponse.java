@@ -1,4 +1,4 @@
-package com.example.buslines.model;
+package com.example.buslines.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

@@ -2,10 +2,10 @@ package com.example.buslines.service;
 
 import com.example.buslines.api.client.SLApiClient;
 import com.example.buslines.model.BusLine;
-import com.example.buslines.model.JourneyLineStopPoint;
-import com.example.buslines.model.JourneyPatternStopResponse;
+import com.example.buslines.api.response.JourneyLineStopPoint;
+import com.example.buslines.api.response.JourneyPatternStopResponse;
 import com.example.buslines.model.LineDirectionPair;
-import com.example.buslines.model.StopPointDetails;
+import com.example.buslines.api.response.StopPointDetails;
 import com.example.buslines.model.TopBusLinesScoreboard;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

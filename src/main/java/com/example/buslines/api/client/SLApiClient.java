@@ -1,9 +1,8 @@
 package com.example.buslines.api.client;
 
 import com.example.buslines.config.ApplicationProperties;
-import com.example.buslines.model.JourneyPatternStopResponse;
-import com.example.buslines.model.StopPointDetails;
-import com.example.buslines.model.StopPointResponse;
+import com.example.buslines.api.response.JourneyPatternStopResponse;
+import com.example.buslines.api.response.StopPointResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
