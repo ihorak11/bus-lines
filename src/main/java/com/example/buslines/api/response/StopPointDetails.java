@@ -1,9 +1,11 @@
 package com.example.buslines.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class StopPointDetails {
     @JsonProperty("StopPointNumber")
     private String stopPointNumber;

@@ -22,6 +22,7 @@ public class BusLineService {
     public TopBusLinesScoreboard getTop10BusLines() {
         JourneyPatternStopResponse journeyResponse = slApiClient.getSlBusLines();
         ArrayList<JourneyLineStopPoint> stopPointList = journeyResponse.getJourneyResponseData().getJourneyLineStopPointList();
+        //TODO if list is null or empty, stop execution
         Map<String, Set<String>> busLineToStopIdMap = busLineUtils.extractBusLineStopIdMap(stopPointList);
 
         return busLineUtils.createTopBusLinesScoreboardObject(busLineToStopIdMap);

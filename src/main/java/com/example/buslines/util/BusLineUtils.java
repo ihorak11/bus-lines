@@ -31,7 +31,7 @@ public class BusLineUtils {
     public Map<String, Set<String>> extractBusLineStopIdMap(ArrayList<JourneyLineStopPoint> journeyLineStopPointList) {
         return journeyLineStopPointList.stream()
                 .collect(
-                        Collectors.groupingBy(stopPoint -> stopPoint.getLineNumber() + DELIMITER + stopPoint.getDirectionCode(),
+                        Collectors.groupingBy(stopPoint -> createLineDirectionKey(stopPoint.getLineNumber(), stopPoint.getDirectionCode()),
                                 Collectors.mapping(JourneyLineStopPoint::getJourneyPatternPointNumber, Collectors.toSet()))
                 );
     }
@@ -91,5 +91,9 @@ public class BusLineUtils {
                 .lineNumber(split[0])
                 .direction(split[1])
                 .build();
+    }
+
+    public String createLineDirectionKey(String line, String direction) {
+        return line + DELIMITER + direction;
     }
 }
