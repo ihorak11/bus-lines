@@ -14,6 +14,7 @@ function createScoreboard(scoreboard) {
         busLineButton.type = 'button';
         busLineButton.classList.add('ac-trigger');
         busLineButton.textContent = 'Line: ' + busLine.designation + ' Direction: ' + busLine.direction + ' Number of stops: ' + busLine.noOfStops;
+        busLineButton.style.textAlign = 'center';
 
         accordion.appendChild(busLineHeader);
         busLineHeader.appendChild(busLineButton);
@@ -21,6 +22,7 @@ function createScoreboard(scoreboard) {
         // create panel div
         const stopListPanel = document.createElement('div');
         stopListPanel.classList.add('ac-panel');
+        stopListPanel.style.textAlign = 'center';
 
         // populate stop names
         for (let stopName of busLine.stopNames) {

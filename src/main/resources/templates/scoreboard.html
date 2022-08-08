@@ -6,27 +6,17 @@
     <script type="text/javascript" th:src="@{/js/scoreboard.js}"></script>
     <link rel="stylesheet" href="https://unpkg.com/accordion-js@3.3.0/dist/accordion.min.css">
     <script src="https://unpkg.com/accordion-js@3.3.0/dist/accordion.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-<h2>Top 10 busiest Bus lines</h2>
+<body style="font-family: Verdana">
+<h2 style="text-align: center">Top 10 busiest Bus lines</h2>
 <div id="accordion-container" class="accordion-container">
-    <!--<div class="ac">
-        <h2 class="ac-header">
-            <button type="button" class="ac-trigger">Lorem ipsum dolor sit amet.</button>
-        </h2>
-        <div class="ac-panel">
-            <p class="ac-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-    </div>-->
 </div>
 <div>
     <p style="text-align:center;">This service is based on information retrieved from <a href="https://www.trafiklab.se/">Trafiklab.se</a></p>
 </div>
 <script th:inline="javascript">
-    const scoreboard = /*[[${scoreboard}]]*/ {};
-    createScoreboard(scoreboard);
-</script>
-<script>
+    createScoreboard(/*[[${scoreboard}]]*/);
     new Accordion('.accordion-container');
 </script>
 </body>
