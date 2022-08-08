@@ -18,7 +18,7 @@ public class ApiClient {
 
 
     public <K> K apiRequest(HttpMethod method, String path, Class<K> responseClass, MultiValueMap<String, String> queryParams, Object... pathParams) {
-        return webClient.method(method)
+        return webClient.method(method) //TODO add headers as per Trafiklab.se
                 .uri(uriBuilder ->
                         uriBuilder
                                 .path(path)

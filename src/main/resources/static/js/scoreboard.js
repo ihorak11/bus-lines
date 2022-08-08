@@ -13,7 +13,7 @@ function createScoreboard(scoreboard) {
         const busLineButton = document.createElement('button');
         busLineButton.type = 'button';
         busLineButton.classList.add('ac-trigger');
-        busLineButton.textContent = 'Line: ' + busLine.designation + ' Direction: ' + busLine.direction + ' Number of stops: ' + busLine.stopNames.length;
+        busLineButton.textContent = 'Line: ' + busLine.designation + ' Direction: ' + busLine.direction + ' Number of stops: ' + busLine.noOfStops;
 
         accordion.appendChild(busLineHeader);
         busLineHeader.appendChild(busLineButton);

@@ -53,6 +53,8 @@ public class BusLineService {
                 .sorted(Comparator.comparing(o -> o.getValue().size(), Comparator.reverseOrder()))
                 .limit(10)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        //the API seems to not return the details for all the stops, resulting in inability to extract all of the stop names from the response
         ArrayList<StopPointDetails> stopPointDetailsList = slApiClient.getStopPointDetails().getResponseData().getStopPointDetailsList();
         LineDirectionPair lineDirectionPair;
         BusLine busLine;
@@ -64,12 +66,13 @@ public class BusLineService {
                     .designation(lineDirectionPair.getLineNumber())
                     .direction(lineDirectionPair.getDirection())
                     .stopNames(getStopNamesFromStopIds(stopPointDetailsList, topTenBusLines.get(key)))
+                    .noOfStops(topTenBusLines.get(key).size())
                     .build();
 
             busLines.add(busLine);
         }
 
-        busLines.sort(Comparator.comparing(o -> o.getStopNames().size(), Comparator.reverseOrder()));
+        busLines.sort(Comparator.comparing(BusLine::getNoOfStops, Comparator.reverseOrder()));
 
         return TopBusLinesScoreboard.builder()
                 .busLines(busLines)
@@ -79,14 +82,14 @@ public class BusLineService {
     /**
      * @param stopPointDetailsList List of objects containing bus stop details
      * @param stopPointIdSet Set of stop IDs for a specific bus line
-     * @return List of bus stop names
+     * @return Set of bus stop names
      */
-    private ArrayList<String> getStopNamesFromStopIds(ArrayList<StopPointDetails> stopPointDetailsList, Set<String> stopPointIdSet) {
+    private Set<String> getStopNamesFromStopIds(ArrayList<StopPointDetails> stopPointDetailsList, Set<String> stopPointIdSet) {
 
         return stopPointDetailsList.stream()
                 .filter(stopPointDetails -> stopPointIdSet.contains(stopPointDetails.getStopPointNumber()))
                 .map(StopPointDetails::getStopPointName)
-                .collect(Collectors.toCollection(ArrayList::new));
+                .collect(Collectors.toSet());
     }
 
     private LineDirectionPair getLineDirectionPair(String lineDirectionKey) {

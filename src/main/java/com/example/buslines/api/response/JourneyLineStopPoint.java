@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
-public class JourneyLineStopPoint { //TODO move to a more suiting directory
+public class JourneyLineStopPoint {
     @JsonProperty("LineNumber")
     public String lineNumber;
     @JsonProperty("DirectionCode")
