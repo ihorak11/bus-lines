@@ -8,9 +8,9 @@ import java.util.ArrayList;
 @Getter
 public class StopPointResponseData {
     @JsonProperty("Version")
-    public String version;
+    private String version;
     @JsonProperty("Type")
-    public String type;
+    private String type;
     @JsonProperty("Result")
-    public ArrayList<StopPointDetails> stopPointDetailsList;
+    private ArrayList<StopPointDetails> stopPointDetailsList;
 }

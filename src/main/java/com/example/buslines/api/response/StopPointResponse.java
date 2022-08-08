@@ -6,11 +6,11 @@ import lombok.Getter;
 @Getter
 public class StopPointResponse {
     @JsonProperty("StatusCode")
-    public int statusCode;
+    private int statusCode;
     @JsonProperty("Message")
-    public Object message;
+    private Object message;
     @JsonProperty("ExecutionTime")
-    public int executionTime;
+    private int executionTime;
     @JsonProperty("ResponseData")
-    public StopPointResponseData responseData;
+    private StopPointResponseData responseData;
 }

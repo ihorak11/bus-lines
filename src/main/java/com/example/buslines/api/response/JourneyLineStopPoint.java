@@ -1,18 +1,20 @@
 package com.example.buslines.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class JourneyLineStopPoint {
     @JsonProperty("LineNumber")
-    public String lineNumber;
+    private String lineNumber;
     @JsonProperty("DirectionCode")
-    public String directionCode;
+    private String directionCode;
     @JsonProperty("JourneyPatternPointNumber")
-    public String journeyPatternPointNumber;
+    private String journeyPatternPointNumber;
     @JsonProperty("LastModifiedUtcDateTime")
-    public String lastModifiedUtcDateTime;
+    private String lastModifiedUtcDateTime;
     @JsonProperty("ExistsFromDate")
-    public String existsFromDate;
+    private String existsFromDate;
 }

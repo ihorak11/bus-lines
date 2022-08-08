@@ -6,21 +6,21 @@ import lombok.Getter;
 @Getter
 public class StopPointDetails {
     @JsonProperty("StopPointNumber")
-    public String stopPointNumber;
+    private String stopPointNumber;
     @JsonProperty("StopPointName")
-    public String stopPointName;
+    private String stopPointName;
     @JsonProperty("StopAreaNumber")
-    public String stopAreaNumber;
+    private String stopAreaNumber;
     @JsonProperty("LocationNorthingCoordinate")
-    public String locationNorthingCoordinate;
+    private String locationNorthingCoordinate;
     @JsonProperty("LocationEastingCoordinate")
-    public String locationEastingCoordinate;
+    private String locationEastingCoordinate;
     @JsonProperty("ZoneShortName")
-    public String zoneShortName;
+    private String zoneShortName;
     @JsonProperty("StopAreaTypeCode")
-    public String stopAreaTypeCode;
+    private String stopAreaTypeCode;
     @JsonProperty("LastModifiedUtcDateTime")
-    public String lastModifiedUtcDateTime;
+    private String lastModifiedUtcDateTime;
     @JsonProperty("ExistsFromDate")
-    public String existsFromDate;
+    private String existsFromDate;
 }

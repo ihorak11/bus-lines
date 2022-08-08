@@ -8,5 +8,5 @@ import java.util.ArrayList;
 @Getter
 @Builder
 public class TopBusLinesScoreboard {
-    ArrayList<BusLine> busLines;
+    private ArrayList<BusLine> busLines;
 }
