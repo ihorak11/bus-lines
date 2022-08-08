@@ -15,7 +15,7 @@ api.sl.api-key=*yourApiKeyHere*
 ````
 3. You need to make sure you have Java JDK installed and JAVA_HOME environment variable set up
 4. From the root of the project, run the following command in your command prompt:
-#### Mac OS
+#### Unix
 ````
 ./mvnw spring-boot:run
 ````
