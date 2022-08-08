@@ -7,6 +7,7 @@ import com.example.buslines.model.BusLine;
 import com.example.buslines.model.LineDirectionPair;
 import com.example.buslines.model.TopBusLinesScoreboard;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class BusLineUtils {
 
     private SLApiClient slApiClient;
@@ -29,6 +31,8 @@ public class BusLineUtils {
      * @return Map where the key is the bus identification string in format "lineNumber;directionCode" and the values are a set of unique stop IDs
      */
     public Map<String, Set<String>> extractBusLineStopIdMap(ArrayList<JourneyLineStopPoint> journeyLineStopPointList) {
+        log.info("Extracting stop IDs");
+
         return journeyLineStopPointList.stream()
                 .collect(
                         Collectors.groupingBy(stopPoint -> createLineDirectionKey(stopPoint.getLineNumber(), stopPoint.getDirectionCode()),
@@ -41,6 +45,8 @@ public class BusLineUtils {
      * @return Fully prepared object that will be consumed by frontend to construct the bus line scoreboard
      */
     public TopBusLinesScoreboard createTopBusLinesScoreboardObject(Map<String, Set<String>> busLineToStopIdMap) {
+        log.info("Entering Top Scoreboard object creation");
+
         Map<String, Set<String>> topTenBusLines = busLineToStopIdMap.entrySet().stream()
                 .sorted(Comparator.comparing(o -> o.getValue().size(), Comparator.reverseOrder()))
                 .limit(10)

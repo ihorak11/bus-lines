@@ -26,6 +26,8 @@ public class SLApiClient extends ApiClient {
     }
 
     public JourneyPatternStopResponse getSlBusLines() {
+        log.info("Calling API for GET bus journey details");
+
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add(QUERY_PARAM_NAME_MODEL, RESPONSE_MODEL_JOURNEY);
         queryParams.add(QUERY_PARAM_NAME_DTMC, DEFAULT_TRANSPORT_MODE_CODE_BUS);
@@ -35,6 +37,8 @@ public class SLApiClient extends ApiClient {
     }
 
     public StopPointResponse getStopPointDetails() {
+        log.info("Calling API for GET stop point details");
+
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add(QUERY_PARAM_NAME_MODEL, RESPONSE_MODEL_STOP);
         queryParams.add(QUERY_PARAM_NAME_DTMC, DEFAULT_TRANSPORT_MODE_CODE_BUS);
