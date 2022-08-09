@@ -13,7 +13,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Slf4j
 @Service
 public class SLApiClient extends ApiClient {
-
     public static final String QUERY_PARAM_NAME_MODEL = "model";
     public static final String RESPONSE_MODEL_JOURNEY = "jour"; //this would usually be a Enum but not necessary now
     public static final String RESPONSE_MODEL_STOP = "stop"; //this would usually be a Enum but not necessary now

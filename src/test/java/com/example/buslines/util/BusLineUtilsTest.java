@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BusLineUtilsTest {
 
-    BusLineUtils cut = new BusLineUtils(null); //decided to call the constructor instead of autowiring to skip unnecessary overhead since the slApiClient is not used in the tests (yet)
+    BusLineUtils cut = new BusLineUtils();
 
     @Test
     void extractBusLineStopIdMap_correctListProvided_successful() {
@@ -40,7 +40,7 @@ class BusLineUtilsTest {
 
     @Test
     @Disabled
-    void extractBusLineStopIdMap_emptyProvided_throwsException() { //TODO change later to proprietary exception
+    void extractBusLineStopIdMap_emptyProvided_throwsException() {
         assertThrows(Exception.class, () -> cut.extractBusLineStopIdMap(new ArrayList<>()));
     }
 

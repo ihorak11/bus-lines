@@ -3,6 +3,7 @@ package com.example.buslines.service;
 import com.example.buslines.api.client.SLApiClient;
 import com.example.buslines.api.response.JourneyLineStopPoint;
 import com.example.buslines.api.response.JourneyPatternStopResponse;
+import com.example.buslines.api.response.StopPointDetails;
 import com.example.buslines.model.TopBusLinesScoreboard;
 import com.example.buslines.util.BusLineUtils;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,6 @@ import java.util.Set;
 @Service
 @Slf4j
 public class BusLineService {
-    //TODO put helpful comments everywhere once code is done
     private SLApiClient slApiClient;
     private BusLineUtils busLineUtils;
 
@@ -25,10 +25,13 @@ public class BusLineService {
         log.info("Fetching the bus line scoreboard");
 
         JourneyPatternStopResponse journeyResponse = slApiClient.getSlBusLines();
+
         ArrayList<JourneyLineStopPoint> stopPointList = journeyResponse.getJourneyResponseData().getJourneyLineStopPointList();
-        //TODO if list is null or empty, stop execution
         Map<String, Set<String>> busLineToStopIdMap = busLineUtils.extractBusLineStopIdMap(stopPointList);
 
-        return busLineUtils.createTopBusLinesScoreboardObject(busLineToStopIdMap);
+        //the API seems to not return the details for all the stops, resulting in inability to extract all of the stop names from the response
+        ArrayList<StopPointDetails> stopPointDetailsList = slApiClient.getStopPointDetails().getResponseData().getStopPointDetailsList();
+
+        return busLineUtils.createTopBusLinesScoreboardObject(busLineToStopIdMap, stopPointDetailsList);
     }
 }

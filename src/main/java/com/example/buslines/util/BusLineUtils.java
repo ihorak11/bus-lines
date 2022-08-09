@@ -1,12 +1,10 @@
 package com.example.buslines.util;
 
-import com.example.buslines.api.client.SLApiClient;
 import com.example.buslines.api.response.JourneyLineStopPoint;
 import com.example.buslines.api.response.StopPointDetails;
 import com.example.buslines.model.BusLine;
 import com.example.buslines.model.LineDirectionPair;
 import com.example.buslines.model.TopBusLinesScoreboard;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +14,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Service
 @Slf4j
 public class BusLineUtils {
-
-    private SLApiClient slApiClient;
 
     private final String DELIMITER = ";";
 
 
     /**
-     * @param journeyLineStopPointList List of stop point details together with details about which bus stop they belong to
-     * @return Map where the key is the bus identification string in format "lineNumber;directionCode" and the values are a set of unique stop IDs
+     * @param journeyLineStopPointList List of stop point details together with details about which bus line they belong to
+     * @return Map where the key is the bus line identification string in format "lineNumber;directionCode" and the values are a set of unique stop IDs
      */
     public Map<String, Set<String>> extractBusLineStopIdMap(ArrayList<JourneyLineStopPoint> journeyLineStopPointList) {
         log.info("Extracting stop IDs");
@@ -44,7 +39,7 @@ public class BusLineUtils {
      * @param busLineToStopIdMap Map where the key is the bus identification string in format "lineNumber;directionCode" and the values are a set of unique stop IDs
      * @return Fully prepared object that will be consumed by frontend to construct the bus line scoreboard
      */
-    public TopBusLinesScoreboard createTopBusLinesScoreboardObject(Map<String, Set<String>> busLineToStopIdMap) {
+    public TopBusLinesScoreboard createTopBusLinesScoreboardObject(Map<String, Set<String>> busLineToStopIdMap, ArrayList<StopPointDetails> stopPointDetailsList) {
         log.info("Entering Top Scoreboard object creation");
 
         Map<String, Set<String>> topTenBusLines = busLineToStopIdMap.entrySet().stream()
@@ -52,8 +47,6 @@ public class BusLineUtils {
                 .limit(10)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        //the API seems to not return the details for all the stops, resulting in inability to extract all of the stop names from the response
-        ArrayList<StopPointDetails> stopPointDetailsList = slApiClient.getStopPointDetails().getResponseData().getStopPointDetailsList();
         LineDirectionPair lineDirectionPair;
         BusLine busLine;
         ArrayList<BusLine> busLines = new ArrayList<>();

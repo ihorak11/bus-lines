@@ -18,7 +18,7 @@ public class ApiClient {
 
 
     public <K> K apiRequest(HttpMethod method, String path, Class<K> responseClass, MultiValueMap<String, String> queryParams, Object... pathParams) {
-        return webClient.method(method) //TODO add headers as per Trafiklab.se
+        return webClient.method(method)
                 .uri(uriBuilder ->
                         uriBuilder
                                 .path(path)
@@ -28,7 +28,7 @@ public class ApiClient {
                 .retrieve()
                 .onStatus(httpStatus -> !httpStatus.is2xxSuccessful(), clientResponse -> {
                     String errorMsg = "Response returned with code: " + clientResponse.statusCode();
-                    return Mono.error(new RuntimeException(errorMsg)); //TODO add exception handler
+                    return Mono.error(new RuntimeException(errorMsg));
                 })
                 .bodyToMono(responseClass)
                 .block();
