@@ -22,7 +22,7 @@ api.sl.api-key=*yourApiKeyHere*
 
 #### Windows
 ````
-./mvnw.cmd spring-boot:run
+mvnw.cmd spring-boot:run
 ````
 5. After the app has fully and successfully started, the home page can be accessed by entering the following URL in the web browser:
 ````
